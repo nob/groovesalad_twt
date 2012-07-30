@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Groove Salad Song Tweet</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+                resource_url = 'http://api.twitter.com/1/statuses/user_timeline.json?callback=?';
+                $.getJSON(
+                    resource_url, 
+                    {count:1, screen_name: 'groovesalad'}, 
+                    function(data){
+                        data[0].text.match(/\u266c\s(.+)\s-\s(.+)\s\u266c/);
+                        var song_info = '\u266c ' + RegExp.$2 + ' by ' + RegExp.$1 + ' \u266c'; 
+                        song_info = song_info.replace('&amp;', '%26');
+                        var fixed_text = ' is now playing on GrooveSalad, SomaFM. Tune in to the cool song now!';
+                        var url = 'http%3A%2F%2Fsoma.fm%2Fgroovesalad.pls'; 
+                        $('#song_info').text(song_info);
+                        location.href='https://twitter.com/intent/tweet?source=tweetbutton&url=' + url + '&text=' + song_info + fixed_text;
+                    }
+                );
+        });
+    </script>
+</head>
+<body>
+<h2 id="song_info"></h2>
+</body>
+</html>
