@@ -6,6 +6,9 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
+                setInterval(function(){
+                                $('#msg').text($('#msg').text() + '.');
+                            }, 1000);
                 resource_url = 'http://api.twitter.com/1/statuses/user_timeline.json?callback=?';
                 $.getJSON(
                     resource_url, 
@@ -16,7 +19,6 @@
                         song_info = song_info.replace('&amp;', '%26');
                         var fixed_text = ' is now playing on GrooveSalad, SomaFM. Tune in to the cool song now!';
                         var url = 'http%3A%2F%2Fsoma.fm%2Fgroovesalad.pls'; 
-                        $('#song_info').text(song_info);
                         location.href='https://twitter.com/intent/tweet?source=tweetbutton&url=' + url + '&text=' + song_info + fixed_text;
                     }
                 );
@@ -24,6 +26,7 @@
     </script>
 </head>
 <body>
-<h2 id="song_info"></h2>
+<h2 id="msg">Generating a tweet for current song...</h2>
+<iframe id="frame" src="" frameborder="0"></iframe>
 </body>
 </html>
