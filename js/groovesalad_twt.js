@@ -23,7 +23,7 @@ $(document).ready(function(){
                     $('#tw').attr('href','https://twitter.com/intent/tweet?source=tweetbutton&url=' + url + '&text=' + song_info_url + fixed_text);
                     //$('#tw').text(song_info);
                     $('#tw').text('Tweet song!');
-                    $('#tw-icon').css('backgroundImage', 'url(/scripts/groovesalad_twt/img/tw-blue.png)');
+                    $('#tw-icon').css('backgroundImage', 'url(img/tw-blue.png)');
                     clearInterval(interval_id);
                     $('#arrow').text('-------->');
                     $('#arrow').css('color', '#19BBF2');
