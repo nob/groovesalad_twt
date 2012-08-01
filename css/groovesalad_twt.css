@@ -15,19 +15,29 @@ div#content {
 }
 div#content div {
     margin: 0px 0px;
+    float: left;
     width: 128px;
     height: 128px;
-    float: left;
 }
 div#gs-icon {
     background: black url(../img/gs.jpg) no-repeat scroll top left; 
 }
 div#tw-icon {
-    background: black url(../img/tw-blue.png) no-repeat scroll top left;
+    background: black url(../img/tw-white.png) no-repeat scroll top left;
 }
-div#msg {
+div#tw-icon p {
+    margin: 30px 17px;
+}
+div#tw-icon a#tw {
+    font-size: 30px;
     font-family: helvetica, arial, freesans, clean, sans-serif;
-    font-size: 40px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+div#arrow {
+    font-family: helvetica, arial, freesans, clean, sans-serif;
+    font-size: 34px;
     font-weight: bold;
     color: #FFFFFF;
     padding: 40px 10px;    
