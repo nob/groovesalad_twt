@@ -12,7 +12,7 @@ $(document).ready(function(){
             {count:1, screen_name: 'groovesalad'}, 
             function(data){
                 data[0].text.match(/\u266c\s(.+)\s-\s(.+)\s\u266c/);
-                var song_info = '\u266c ' + RegExp.$2 + ' by ' + RegExp.$1 + ' \u266c'; 
+                var song_info = '\u266c ' + RegExp.$2 + ' (by ' + RegExp.$1 + ') \u266c'; 
                 song_info = song_info.replace('&amp;', '%26');
                 var fixed_text = ' is now playing on GrooveSalad, SomaFM. Tune in to the cool song now!';
                 var url = 'http%3A%2F%2Fsoma.fm%2Fgroovesalad.pls'; 
