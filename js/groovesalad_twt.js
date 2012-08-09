@@ -1,13 +1,5 @@
 $(document).ready(function(){
-        interval_id = setInterval(function(){
-                            if ($('#arrow').text().length > 9) {
-                                $('#arrow').text('->');
-                            } else {
-                                $('#arrow').text('-' + $('#arrow').text()) ;
-                            }
-                       }, 40);
         resource_url = 'http://api.twitter.com/1/statuses/user_timeline.json?callback=?';
-        //$('#tw-icon').click(function(){$(window).unload( function () { alert("Bye now!"); } );})
         $.getJSON(
             resource_url, 
             {count:1, screen_name: 'groovesalad'}, 
@@ -21,12 +13,13 @@ $(document).ready(function(){
                     var fixed_text = ' is now playing on GrooveSalad, SomaFM. Tune in to the cool song now!';
                     var url = 'http%3A%2F%2Fsoma.fm%2Fgroovesalad.pls'; 
                     $('#tw').attr('href','https://twitter.com/intent/tweet?source=tweetbutton&url=' + url + '&text=' + song_info_url + fixed_text);
-                    //$('#tw').text(song_info);
+                    $('#song_info').text(song_info);
+                    $('.loading').remove();
                     $('#tw').text('Tweet song!');
+                    $('#tw').height(78);
+                    $('#tw').width(88);
+                    $('#tw').css('padding', '25px 20px');
                     $('#tw-icon').css('backgroundImage', 'url(img/tw-blue.png)');
-                    clearInterval(interval_id);
-                    $('#arrow').text('-------->');
-                    $('#arrow').css('color', '#19BBF2');
                 }
             }
         );

@@ -1,11 +1,57 @@
 body {
-    background-color: #898989;
+    background-color: #2D2D2D;
+    font-family: 'Fredoka One', helvetica, arial, freesans, clean, sans-serif;
 }
 div#content {
-    margin: 40px 40px;
+    margin: 40px auto;
     padding: 0;
-    width: 700px;
+    width: 950px;
     border: 0px solid black;
+}
+div#content div{
+    margin: 0px auto;
+    text-align: center;
+}
+div#heading{
+    color: #C6C6C6;
+    font-size: 26px;
+    width: 750px;
+}
+div#heading span{
+    vertical-align: 60%;
+}
+div#song_info{
+    color: #42CE2E;
+    font-size: 30px; 
+    width: 750px;
+}
+div#tw-icon {
+    margin-top: 40px !important;
+    background: black url(../img/tw-white.png) no-repeat scroll top left;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    width: 128px;
+    height: 128px;
+}
+div#tw-icon .loading {
+    z-index: 100;
+    position: relative;
+    top: 50px;
+    left: 0px; 
+}
+div#tw-icon a#tw {
+    display: block;
+    height: 0px;
+    width: 0px;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    padding: 0px 0px;
+    font-size: 30px;
+    font-family: helvetica, arial, freesans, clean, sans-serif;
+    text-decoration: none;
+    font-weight: bold;
+    color: #FFFFFF;
 }
 .clearfix {zoom:1;}
 .clearfix: after {
@@ -13,32 +59,4 @@ div#content {
     display: block;
     clear: both;
 }
-div#content div {
-    margin: 0px 0px;
-    float: left;
-    width: 128px;
-    height: 128px;
-}
-div#gs-icon {
-    background: black url(../img/gs.jpg) no-repeat scroll top left; 
-}
-div#tw-icon {
-    background: black url(../img/tw-white.png) no-repeat scroll top left;
-}
-div#tw-icon p {
-    margin: 30px 17px;
-}
-div#tw-icon a#tw {
-    font-size: 30px;
-    font-family: helvetica, arial, freesans, clean, sans-serif;
-    text-decoration: none;
-    font-weight: bold;
-    color: #FFFFFF;
-}
-div#arrow {
-    font-family: helvetica, arial, freesans, clean, sans-serif;
-    font-size: 34px;
-    font-weight: bold;
-    color: #FFFFFF;
-    padding: 40px 10px;    
-}
+
