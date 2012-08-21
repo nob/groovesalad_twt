@@ -53,6 +53,39 @@ div#tw-icon a#tw {
     font-weight: bold;
     color: #FFFFFF;
 }
+div#credit {
+    /*
+    padding-left: 350px;
+    */
+    position: fixed;
+    margin: 0px 0px !important;
+    top: 400px;
+    left: 600px;
+    text-align: left !important;
+    width: 30px;
+    height: 30px;
+    overflow-x: hidden;
+}
+div#credit i{
+    font-size: 30px;
+    color: #575656;
+    cursor: pointer;
+}
+div#credit span#msg {
+    line-height: 30px;
+    vertical-align: top;
+    color: #444242;
+}
+div#credit a{
+    line-height: 30px;
+    vertical-align: top;
+    text-decoration: none;
+    color: #575656;
+}
+div#credit i:hover,
+div#credit a:hover {
+    color: #C6C6C6;
+}
 .clearfix {zoom:1;}
 .clearfix: after {
     content: "";

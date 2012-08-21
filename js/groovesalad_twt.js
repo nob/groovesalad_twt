@@ -23,4 +23,12 @@ $(document).ready(function(){
                 }
             }
         );
+
+       $('.icon-info-sign').click(function(){  
+          if($('#credit').width() === 30) { 
+              $('#credit').animate({width: '400px'}, 400); 
+          } else {
+              $('#credit').animate({width: '30px'}, 400); 
+          }
+       });
 });
