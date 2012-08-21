@@ -57,10 +57,9 @@ div#credit {
     /*
     padding-left: 350px;
     */
-    position: fixed;
-    margin: 0px 0px !important;
-    top: 400px;
-    left: 600px;
+    position: relative;
+    margin: 30px 0px 0px!important;
+    left: 25%;
     text-align: left !important;
     width: 30px;
     height: 30px;
