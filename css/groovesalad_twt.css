@@ -20,10 +20,12 @@ div#heading{
 div#heading span{
     vertical-align: 60%;
 }
-div#song_info{
+div#song-info{
     color: #42CE2E;
     font-size: 30px; 
     width: 750px;
+    height: 40px;
+    margin-top: 20px !important;
 }
 div#tw-icon {
     margin-top: 40px !important;
@@ -53,37 +55,38 @@ div#tw-icon a#tw {
     font-weight: bold;
     color: #FFFFFF;
 }
-div#credit {
-    /*
-    padding-left: 350px;
-    */
+div#app-info {
     position: relative;
     margin: 70px 0px 0px!important;
-    left: 30%;
+    left: 35%;
     text-align: left !important;
     width: 30px;
     height: 30px;
     overflow-x: hidden;
 }
-div#credit i{
+div#app-info i{
     font-size: 30px;
     color: #575656;
     cursor: pointer;
 }
-div#credit span#msg {
+div#app-info span#credit {
     line-height: 30px;
     vertical-align: top;
     color: #444242;
 }
-div#credit a{
+div#app-info a{
     line-height: 30px;
     vertical-align: top;
     text-decoration: none;
     color: #575656;
 }
-div#credit i:hover,
-div#credit a:hover {
+div#app-info i:hover,
+div#app-info a:hover {
     color: #C6C6C6;
+}
+p#msg {
+    color: orange;
+    font-size: 20px;
 }
 .clearfix {zoom:1;}
 .clearfix: after {

@@ -4,10 +4,11 @@
 	<meta charset="UTF-8">
 	<title>Groove S. Twt</title>
     <link rel="apple-touch-icon-precomposed" href="img/iOS-icon.png"/>
-    <link rel="stylesheet" href="css/groovesalad_twt.css" media="screen"/>
     <link rel="stylesheet" href="css/font-awesome.css" media="screen"/>
     <link href='http://fonts.googleapis.com/css?family=Fredoka+One' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/groovesalad_twt.css" media="screen"/>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="http://localhost:8080/socket.io/socket.io.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/groovesalad_twt.js"></script>
     <script type="text/javascript">
         var _gaq = _gaq || [];
@@ -27,16 +28,18 @@
             <a href="http://somafm.com/groovesalad/" target="_blank"><img src="img/gs.jpg" alt="Groove Salad" /></a>
             <span> is now playing... </span>
         </div>
-        <div id="song_info">
+        <div id="song-info">
             <img class="loading" src="img/loading_h.gif" alt="loading..." />
+            <span id="song-info-text"></span>
         </div>
+<p id="msg"></p>
         <div id="tw-icon">
             <img class="loading" src="img/loading_c_2.gif" alt="loading..." />
             <!--<script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>-->
             <a id="tw" href=""></a>
         </div>
-        <div id="credit">
-            <i class="icon-info-sign">&nbsp;&nbsp;</i><span id="msg">This page was made by <a href="https://twitter.com/nnusunn_jp" target="_blank" title="@nnusunn_jp">@nnusunn_jp</a></span>
+        <div id="app-info">
+            <i class="icon-info-sign">&nbsp;&nbsp;</i><span id="credit">This page was made by <a href="https://twitter.com/nnusunn_jp" target="_blank" title="@nnusunn_jp">Nob Y.</a></span>
         </div>
     </div>
 </body>
