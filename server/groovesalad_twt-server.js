@@ -28,7 +28,7 @@ var clientCount = 0;
 io.sockets.on('connection', function (socket) {
   util.log('A user connected. current sockets: ' + ++clientCount);
 
-  //push Tweet text form Twitter Rest API for initial display.
+  //push tweet text from Twitter REST API for initial display.
   pushTweetText(tw_rest_api);
   //...and keep pushing tweet text from Twitter Stream API.
   pushTweetText(tw_stream_api);
@@ -52,7 +52,7 @@ hunction pushTweetText(api_request_options) {
             util.log('Twitter API response body' + chunk);
             var data = JSON.parse(chunk); 
             if (util.isArray(data)) {
-                //Twitter Rest API returns array of tweets, get first one.
+                //Twitter REST API returns array of tweets, get first one.
                 data = data[0]; 
             }
             if ('text' in data) { 
