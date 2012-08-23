@@ -40,7 +40,7 @@ io.sockets.on('connection', function (socket) {
 
 });
 
-hunction pushTweetText(api_request_options) {
+function pushTweetText(api_request_options) {
   //get tweets by accessing Twitter API..
   var req = https.request(api_request_options, function(res) {
     util.log('Twitter API response code: ' + res.statusCode);
