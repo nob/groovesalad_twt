@@ -15,7 +15,7 @@ $(document).ready(function(){
         showLoading();
         setTimeout(function() {
             displaySong(data);
-        }, 2000);
+        }, 1500);
     });
 
 });
