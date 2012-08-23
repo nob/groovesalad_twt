@@ -10,7 +10,7 @@ $(document).ready(function(){
     });
 
     //Establish Socket.IO connection to keep receiving new song message. 
-    var socket = io.connect('http://localhost:3000');
+    var socket = io.connect('http://exp.nnusunn.jp:3000');
     socket.on('new_song', function (data) {
         showLoading();
         setTimeout(function() {
