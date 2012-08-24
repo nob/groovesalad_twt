@@ -17,12 +17,21 @@ $(document).ready(function(){
         //, and keep receiving new song tweets. 
         var socket = io.connect('http://' + node_server_host);
 
+        socket.on('connect', function (message) {
+            console.log('Socket.IO connected.');
+        });
+
         socket.on('new_song', function (message) {
             showLoading();
             setTimeout(function() {
                 //deley displaying song info to show 'loading...' effect on purpose. 
                 showSongInfo(message);
             }, 1000);
+        });
+
+        socket.on('disconnect', function (message) {
+            console.log('Socket.IO disconnected.');
+            showLoading();
         });
     })
     .fail(function(){
