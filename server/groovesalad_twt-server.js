@@ -23,15 +23,15 @@ const tw_stream_api = {
 //sockets counter.
 var clientCount = 0;
 
+//Reqest Twitter Stream API and keep pushing tweeted text.
+pushTweetedText(tw_stream_api);
 
 //Add listener.
 io.sockets.on('connection', function (socket) {
   util.log('A user connected. current sockets: ' + ++clientCount);
 
-  //push tweet text from Twitter REST API for initial display.
-  pushTweetText(tw_rest_api);
-  //...and keep pushing tweet text from Twitter Stream API.
-  pushTweetText(tw_stream_api);
+  //Get newest tweeted text from Twitter REST API and push it to the connected socket. 
+  pushTweetedText(tw_rest_api, socket);
 
   socket.on('disconnect', function () {
     util.log('A user disconnected. current sockets:' + --clientCount);
@@ -40,7 +40,7 @@ io.sockets.on('connection', function (socket) {
 
 });
 
-function pushTweetText(api_request_options) {
+function pushTweetedText(api_request_options, socket) {
   //get tweets by accessing Twitter API..
   var req = https.request(api_request_options, function(res) {
     util.log('Twitter API response code: ' + res.statusCode);
@@ -56,8 +56,13 @@ function pushTweetText(api_request_options) {
                 data = data[0]; 
             }
             if ('text' in data) { 
-                //push tweet text to clients. 
-                io.sockets.emit('new_song', data.text);
+                if (typeof(socket) == 'undefined') {
+                    //push tweeted text to all socket. 
+                    io.sockets.emit('new_song', data.text);
+                } else {
+                    //push tweeted text to a specific socket. 
+                    socket.emit('new_song', data.text);
+                }
             }
         }
     });
