@@ -36,7 +36,7 @@ $(document).ready(function(){
         socket.on('new_song', function (message) {
             showLoading();
             setTimeout(function() {
-                //deley displaying song info to show 'loading...' effect on purpose. 
+                //delay displaying song info to show 'loading...' effect on purpose. 
                 showSongInfo(message);
             }, 1000);
         });
