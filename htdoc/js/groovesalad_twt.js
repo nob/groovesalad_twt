@@ -10,6 +10,16 @@ $(document).ready(function(){
           $('#credit').fadeOut(500); 
         }
     });
+     
+    //Disable hover effect for iOS.
+    if((navigator.userAgent.match(/iPhone/i)) || 
+       (navigator.userAgent.match(/iPod/i)) || 
+       (navigator.userAgent.match(/iPad/i))) 
+    {
+        $('#app-info i, #app-info a').click(function(){  
+                $(this).css('color', '#575656');
+        });
+    }
     
     //Load Socket.IO client script.
     var node_server_host = window.location.hostname + ':3000';
