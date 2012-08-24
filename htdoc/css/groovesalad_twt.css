@@ -5,7 +5,9 @@ body {
 div#content {
     margin: 40px auto;
     padding: 0;
+    /*
     width: 950px;
+    */
     border: 0px solid black;
 }
 div#content div{
@@ -15,7 +17,9 @@ div#content div{
 div#heading{
     color: #C6C6C6;
     font-size: 26px;
+    /*
     width: 750px;
+    */
 }
 div#heading span{
     vertical-align: 60%;
@@ -23,11 +27,13 @@ div#heading span{
 div#song-info{
     color: #42CE2E;
     font-size: 30px; 
+    /*
     width: 750px;
+    */
     margin-top: 20px !important;
 }
 div#tw-icon {
-    margin-top: 40px !important;
+    margin-top: 30px !important;
     background: black url(../img/tw-white.png) no-repeat scroll top left;
     -webkit-border-radius: 20px;
     border-radius: 20px;
@@ -56,11 +62,9 @@ div#tw-icon a#tw {
 }
 div#app-info {
     position: relative;
-    margin: 70px 0px 0px!important;
-    left: 35%;
-    text-align: left !important;
+    margin: 45px auto 0px !important;
     width: 30px;
-    height: 30px;
+    height: 32px;
     overflow-x: hidden;
 }
 div#app-info i{
@@ -69,12 +73,12 @@ div#app-info i{
     cursor: pointer;
 }
 div#app-info span#credit {
-    line-height: 30px;
+    line-height: 32px;
     vertical-align: top;
     color: #4D4A4A;
 }
 div#app-info a{
-    line-height: 30px;
+    line-height: 32px;
     vertical-align: top;
     text-decoration: none;
     color: #575656;
