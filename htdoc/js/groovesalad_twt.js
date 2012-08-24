@@ -43,7 +43,7 @@ $(document).ready(function(){
 
 function showSongInfo(tweeted_text) {
     var fixed_tweet_text = ' is now playing on GrooveSalad, SomaFM. Tune in to the cool song now!';
-    var playlist_url = 'http%3A%2F%2Fsoma.fm%2Fgroovesalad.pls'; 
+    var play_url = 'http%3A%2F%2Fsoma.fm%2Fplay%2Fgroovesalad'; 
 
     tweeted_text.match(/\u266c\s(.+)\s-\s(.+)\s\u266c/);
     var song_title = RegExp.$2.replace('&amp;', '&'); 
@@ -54,7 +54,7 @@ function showSongInfo(tweeted_text) {
         $('#song-info-text').text(song_info);
         //prepare 'Tweet Song!' button.
         tweet_text = song_info.replace('&', '%26') + fixed_tweet_text; //url encoding for '&'.
-        $('#tw').attr('href','https://twitter.com/intent/tweet?source=tweetbutton&url=' + playlist_url + '&text=' + tweet_text);
+        $('#tw').attr('href','https://twitter.com/intent/tweet?source=tweetbutton&url=' + play_url + '&text=' + tweet_text);
         $('#tw').text('Tweet song!');
         $('#tw').height(78);
         $('#tw').width(88);
