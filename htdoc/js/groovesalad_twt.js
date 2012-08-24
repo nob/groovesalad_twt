@@ -1,4 +1,5 @@
 $(document).ready(function(){
+   
     //app-info section effect.
     $('.icon-info-sign').click(function(){  
         if($('#app-info').width() === 30) { 
@@ -7,15 +8,26 @@ $(document).ready(function(){
           $('#app-info').animate({width: '30px'}, 400); 
         }
     });
+    
+    //Load Socket.IO client script.
+    var node_server_host = window.location.hostname + ':3000';
+    $.getScript('http://' + node_server_host + '/socket.io/socket.io.js')
+    .done(function(){
+        //Socket.IO client loaded. Establish Socket.IO connection 
+        //, and keep receiving new song tweets. 
+        var socket = io.connect('http://' + node_server_host);
 
-    //Establish Socket.IO connection and keep receiving new song tweets. 
-    var socket = io.connect('http://exp.nnusunn.jp:3000');
-    socket.on('new_song', function (message) {
-        showLoading();
-        setTimeout(function() {
-            //deley displaying song title in order to show 'loading...' effect. 
-            showSongInfo(message);
-        }, 1500);
+        socket.on('new_song', function (message) {
+            showLoading();
+            setTimeout(function() {
+                //deley displaying song info to show 'loading...' effect on purpose. 
+                showSongInfo(message);
+            }, 1000);
+        });
+    })
+    .fail(function(){
+        //Failed to load Socket.IO client. 
+        console.log("Error: Node server doesn't seem to be running.");
     });
 
 });
