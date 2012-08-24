@@ -65,7 +65,6 @@ div#app-info {
     margin: 45px auto 0px !important;
     width: 30px;
     height: 32px;
-    overflow-x: hidden;
 }
 div#app-info i{
     font-size: 30px;
@@ -76,6 +75,7 @@ div#app-info span#credit {
     line-height: 32px;
     vertical-align: top;
     color: #4D4A4A;
+    display: none;
 }
 div#app-info a{
     line-height: 32px;

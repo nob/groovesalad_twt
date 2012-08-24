@@ -3,9 +3,11 @@ $(document).ready(function(){
     //app-info section effect.
     $('.icon-info-sign').click(function(){  
         if($('#app-info').width() === 30) { 
-          $('#app-info').animate({width: '350px'}, 400); 
+          $('#app-info').animate({width: '350px'}, 500); 
+          $('#credit').fadeIn(500); 
         } else {
-          $('#app-info').animate({width: '30px'}, 400); 
+          $('#app-info').animate({width: '30px'}, 500); 
+          $('#credit').fadeOut(500); 
         }
     });
     
