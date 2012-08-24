@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     //app-info section effect.
     $('.icon-info-sign').click(function(){  
         if($('#app-info').width() === 30) { 
@@ -9,28 +8,32 @@ $(document).ready(function(){
         }
     });
 
-    //Establish Socket.IO connection to keep receiving new song message. 
+    //Establish Socket.IO connection and keep receiving new song tweets. 
     var socket = io.connect('http://exp.nnusunn.jp:3000');
-    socket.on('new_song', function (data) {
+    socket.on('new_song', function (message) {
         showLoading();
         setTimeout(function() {
-            displaySong(data);
+            //deley displaying song title in order to show 'loading...' effect. 
+            showSongInfo(message);
         }, 1500);
     });
 
 });
 
-function displaySong(tweet) {
-    tweet.match(/\u266c\s(.+)\s-\s(.+)\s\u266c/);
-    song_title = RegExp.$2.replace('&amp;', '&'); 
-    artist = RegExp.$1.replace('&amp;', '&'); 
+function showSongInfo(tweeted_text) {
+    var fixed_tweet_text = ' is now playing on GrooveSalad, SomaFM. Tune in to the cool song now!';
+    var playlist_url = 'http%3A%2F%2Fsoma.fm%2Fgroovesalad.pls'; 
+
+    tweeted_text.match(/\u266c\s(.+)\s-\s(.+)\s\u266c/);
+    var song_title = RegExp.$2.replace('&amp;', '&'); 
+    var artist = RegExp.$1.replace('&amp;', '&'); 
     if (song_title !== '' || artist !== '') {
-        song_info = '\u266c ' + song_title + ' (by ' + artist + ') \u266c'; 
+        var song_info = '\u266c ' + song_title + ' (by ' + artist + ') \u266c'; 
+        //set song info.
         $('#song-info-text').text(song_info);
-        song_info_url = song_info.replace('&', '%26');
-        fixed_text = ' is now playing on GrooveSalad, SomaFM. Tune in to the cool song now!';
-        url = 'http%3A%2F%2Fsoma.fm%2Fgroovesalad.pls'; 
-        $('#tw').attr('href','https://twitter.com/intent/tweet?source=tweetbutton&url=' + url + '&text=' + song_info_url + fixed_text);
+        //prepare 'Tweet Song!' button.
+        tweet_text = song_info.replace('&', '%26') + fixed_tweet_text; //url encoding for '&'.
+        $('#tw').attr('href','https://twitter.com/intent/tweet?source=tweetbutton&url=' + playlist_url + '&text=' + tweet_text);
         $('#tw').text('Tweet song!');
         $('#tw').height(78);
         $('#tw').width(88);
