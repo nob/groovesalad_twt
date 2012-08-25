@@ -25,22 +25,21 @@ const tw_stream_api = {
 //sockets counter.
 var clientCount = 0;
 
-//Reqest Twitter Stream API and keep pushing tweeted text.
-pushTweetedText(tw_stream_api);
 
 //Add listener.
 io.sockets.on('connection', function (socket) {
-  util.log('A user connected. current sockets: ' + ++clientCount);
+    util.log('A user connected. current sockets: ' + ++clientCount);
 
-  //Get newest tweeted text from Twitter REST API 
-  //and push it to the connected socket. 
-  pushTweetedText(tw_rest_api, socket);
+    //Get newest tweeted text from Twitter REST API 
+    //and push it to the connected socket. 
+    pushTweetedText(tw_rest_api, socket);
 
-  socket.on('disconnect', function () {
-    util.log('A user disconnected. current sockets:' + --clientCount);
-  });
-  
+    //Reqest Twitter Stream API and keep pushing tweeted text.
+    pushTweetedText(tw_stream_api);
 
+    socket.on('disconnect', function () {
+        util.log('A user disconnected. current sockets:' + --clientCount);
+    });
 });
 
 function pushTweetedText(api_request_options, socket) {
