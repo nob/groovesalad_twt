@@ -9,6 +9,7 @@ const tw_rest_api = {
     port : 443,
     method: 'GET',
     path : '/1/statuses/user_timeline.json?screen_name=groovesalad&count=1'
+    //path : '/1/statuses/user_timeline.json?screen_name=hipnosis6666&count=1' //for testing
 };
 
 // Twitter Streaming API
@@ -17,6 +18,7 @@ const tw_stream_api = {
     port : 443,
     method: 'POST',
     path : '/1/statuses/filter.json?follow=6681342', //@groovesalad ID.
+    //path : '/1/statuses/filter.json?follow=223076456', //@hipnosis6666(test account)
     auth : 'dummy5123:qwerty12'
 };
 
@@ -30,7 +32,8 @@ pushTweetedText(tw_stream_api);
 io.sockets.on('connection', function (socket) {
   util.log('A user connected. current sockets: ' + ++clientCount);
 
-  //Get newest tweeted text from Twitter REST API and push it to the connected socket. 
+  //Get newest tweeted text from Twitter REST API 
+  //and push it to the connected socket. 
   pushTweetedText(tw_rest_api, socket);
 
   socket.on('disconnect', function () {
@@ -41,7 +44,7 @@ io.sockets.on('connection', function (socket) {
 });
 
 function pushTweetedText(api_request_options, socket) {
-  //get tweets by accessing Twitter API..
+  //Get tweets by accessing Twitter API..
   var req = https.request(api_request_options, function(res) {
     util.log('Twitter API response code: ' + res.statusCode);
   });
@@ -49,8 +52,24 @@ function pushTweetedText(api_request_options, socket) {
   req.on('response', function(res) {
     res.on('data', function(chunk) {
         if(chunk.length > 2) { 
+        //Twitter Stream API sometimes sends just a blank line with '\r\n'. 
+        //Avoid parsing as a JSON. 
+        
             util.log('Twitter API response body' + chunk);
-            var data = JSON.parse(chunk); 
+
+            try {
+                var data = JSON.parse(chunk); 
+            } catch (e) {
+                //Push newest tweet from REST API in case Sream API sends 
+                //broken JSON data.
+                pushTweetedText(tw_rest_api);
+                if (e.message && e.name) {
+                    util.log('Caught Javascript Exception: [' + e.name + ']'); 
+                } else {
+                    util.log('Caught Javascript Error: [' + e + ']');
+                }
+                return;
+            }
             if (util.isArray(data)) {
                 //Twitter REST API returns array of tweets, get first one.
                 data = data[0]; 
