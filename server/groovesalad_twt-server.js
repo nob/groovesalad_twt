@@ -1,7 +1,19 @@
+/*
+ * http://d.hatena.ne.jp/replication/20120318/1332044327
+ */
+
 //Load modules.
 var https = require('https');
 var io = require('socket.io').listen(3000);
 var util = require('util');
+var twitter = require('ntwitter');
+// Twitter APIを使うためのおまじない
+var twit = new twitter({
+  consumer_key: 'PkSWP5YEO9VMMqbc4C19oQ',
+  consumer_secret: 'azTETgrOi2tCBBj3KQTKEkSAYkANYZh2T3HPHwIk',
+  access_token_key: '223076456-XKqsu00GTMpM0AyVuYQ4kqQojlnPeys1vMdY1gSK',
+  access_token_secret: 'fIVeyymHO8z1uEHt7ARSt7MsqFRJZ1w0mvAjaBCIE'
+});
 
 // Twitter REST API
 const tw_rest_api = {
@@ -29,17 +41,63 @@ var clientCount = 0;
 io.sockets.on('connection', function (socket) {
     util.log('A user connected. current sockets: ' + ++clientCount);
 
-    //Get newest tweeted text from Twitter REST API 
-    //and push it to the connected socket. 
-    pushTweetedText(tw_rest_api, socket);
+    //Get newest tweeted text from Twitter REST API
+    //and push it to the connected socket.
+    //pushTweetedText(tw_rest_api, socket);
+    twit.get('/statuses/user_timeline.json', {'screen_name': 'groovesalad', 'count': '1'}, function(err, data) {
+        if (err) {
+            util.log('Error received from Twitter REST API: ' + err);
+        }
+        if (util.isArray(data)) {
+            //Twitter REST API returns array of tweets, get first one.
+            data = data[0];
+            if ('text' in data) {
+                //push tweeted text to a specific socket.
+                socket.emit('new_song', data.text);
+            }
+        }
+    });
 
     socket.on('disconnect', function () {
         util.log('A user disconnected. current sockets:' + --clientCount);
     });
 });
-
 //Reqest Twitter Stream API and keep pushing tweeted text.
-pushTweetedText(tw_stream_api);
+//pushTweetedText(tw_stream_api);
+twit.stream('statuses/filter', {'follow':'6681342'}, function(stream) {
+  stream.on('data', function (chunk) {
+    util.log('Twitter Stream API response body' + chunk);
+    if(chunk.length > 2) {
+        //Twitter Stream API sometimes sends just a blank line with '\r\n'.
+        //Avoid parsing as a JSON.
+        try {
+            var data = JSON.parse(chunk);
+        } catch (e) {
+            //Push newest tweet from REST API in case Sream API sends
+            //broken JSON data.
+//            pushTweetedText(tw_rest_api);
+            if (e.message && e.name) {
+                util.log('Caught Javascript Exception: [' + e.name + ']');
+            } else {
+                util.log('Caught Javascript Error: [' + e + ']');
+            }
+            return;
+        }
+        if ('text' in data) {
+            //push tweeted text to all socket.
+            io.sockets.emit('new_song', data.text);
+        }
+    }
+  });
+  stream.on('end', function (response) {
+    // Handle a disconnection
+  });
+  stream.on('destroy', function (response) {
+    // Handle a 'silent' disconnection from Twitter, no end/error event fired
+  });
+  // Disconnect stream after five seconds
+  setTimeout(stream.destroy, 5000);
+});
 
 
 function pushTweetedText(api_request_options, socket) {
@@ -50,20 +108,20 @@ function pushTweetedText(api_request_options, socket) {
 
     req.on('response', function(res) {
         res.on('data', function(chunk) {
-            if(chunk.length > 2) { 
-            //Twitter Stream API sometimes sends just a blank line with '\r\n'. 
-            //Avoid parsing as a JSON. 
-            
+            if(chunk.length > 2) {
+            //Twitter Stream API sometimes sends just a blank line with '\r\n'.
+            //Avoid parsing as a JSON.
+
                 util.log('Twitter API response body' + chunk);
 
                 try {
-                    var data = JSON.parse(chunk); 
+                    var data = JSON.parse(chunk);
                 } catch (e) {
-                    //Push newest tweet from REST API in case Sream API sends 
+                    //Push newest tweet from REST API in case Sream API sends
                     //broken JSON data.
                     pushTweetedText(tw_rest_api);
                     if (e.message && e.name) {
-                        util.log('Caught Javascript Exception: [' + e.name + ']'); 
+                        util.log('Caught Javascript Exception: [' + e.name + ']');
                     } else {
                         util.log('Caught Javascript Error: [' + e + ']');
                     }
@@ -71,14 +129,14 @@ function pushTweetedText(api_request_options, socket) {
                 }
                 if (util.isArray(data)) {
                     //Twitter REST API returns array of tweets, get first one.
-                    data = data[0]; 
+                    data = data[0];
                 }
-                if ('text' in data) { 
+                if ('text' in data) {
                     if (typeof(socket) == 'undefined') {
-                        //push tweeted text to all socket. 
+                        //push tweeted text to all socket.
                         io.sockets.emit('new_song', data.text);
                     } else {
-                        //push tweeted text to a specific socket. 
+                        //push tweeted text to a specific socket.
                         socket.emit('new_song', data.text);
                     }
                 }
@@ -87,7 +145,7 @@ function pushTweetedText(api_request_options, socket) {
     });
 
     req.on('error', function(err){
-        util.log('Request Error: ' + err); 
+        util.log('Request Error: ' + err);
     });
 
     req.end();
