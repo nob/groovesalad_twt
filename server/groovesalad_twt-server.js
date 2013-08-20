@@ -2,6 +2,7 @@
  * http://d.hatena.ne.jp/replication/20120318/1332044327
  */
 
+/* jshint strict: false */
 //Load modules.
 var https = require('https');
 var io = require('socket.io').listen(3000);
@@ -16,7 +17,7 @@ var twit = new twitter({
 });
 
 // Twitter REST API
-const tw_rest_api = {
+var tw_rest_api = {
     host : 'api.twitter.com',
     port : 443,
     method: 'GET',
@@ -25,7 +26,7 @@ const tw_rest_api = {
 };
 
 // Twitter Streaming API
-const tw_stream_api = {
+var tw_stream_api = {
     host : 'stream.twitter.com',
     port : 443,
     method: 'POST',
@@ -75,7 +76,7 @@ twit.stream('statuses/filter', {'follow':'6681342'}, function(stream) {
         } catch (e) {
             //Push newest tweet from REST API in case Sream API sends
             //broken JSON data.
-//            pushTweetedText(tw_rest_api);
+            //pushTweetedText(tw_rest_api);
             if (e.message && e.name) {
                 util.log('Caught Javascript Exception: [' + e.name + ']');
             } else {
@@ -105,7 +106,6 @@ function pushTweetedText(api_request_options, socket) {
     var req = https.request(api_request_options, function(res) {
         util.log('Twitter API response code: ' + res.statusCode);
     });
-
     req.on('response', function(res) {
         res.on('data', function(chunk) {
             if(chunk.length > 2) {
